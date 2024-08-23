@@ -1,20 +1,22 @@
-"use server" 
+"use server";
 
-import user from '@/models/user.model'
-import { connect } from '@/db'
+import User from '@/models/user.model';
+import { connect } from '@/db';
 
 
-export async function  createUser(users:any) {
+
+export async function createUser(userInput: any) {
   try {
-    await connect()
-    const newUser= await user.create(users);
-//TODO create token
+    await connect();
 
+    const newUser = await User.create(userInput);
 
-    return JSON.parse(JSON.stringify(newUser )) 
+    // TODO: Implement token creation logic here
+    // Example: const token = createToken(newUser);
+
+    return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
-    console.log(error)
+    console.error("Error creating user:", error);
+    throw new Error("Failed to create user");
   }
-  
 }
-
