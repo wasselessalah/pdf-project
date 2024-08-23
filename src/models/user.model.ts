@@ -14,11 +14,7 @@ unique:true
     },
   
   
-    profilePhoto: {
-      type: String,
-      default:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
     
-    },
     firstName: {
       type: String,
     
@@ -30,6 +26,6 @@ unique:true
   
   },
 );
-const user=models?.users||model("users",userSchema)
+const user=models?.user||model("user",userSchema)
 
 export default user
