@@ -29,8 +29,7 @@ unique:true
     },
   
   },
-  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
-const users=models?.users||model("users",userSchema)
+const user=models?.users||model("users",userSchema)
 
-export default users
+export default user

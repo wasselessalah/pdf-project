@@ -1,12 +1,12 @@
 "use server" 
 
-import users from '@/models/user.model'
+import user from '@/models/user.model'
 import { connect } from '@/db'
 
 
 export async function  createUser(user:any) {
   try {
-    const newUser= await users.create(user);
+    const newUser= await user.create(user);
 //TODO create token
 
 
