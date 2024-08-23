@@ -24,7 +24,7 @@ if (!cached){
     
     cached.promise=
     cached.promise||mongoose.connect(MONGO_URL,{
-      dbName:'test',
+      dbName:'clerk',
       bufferCommands:false,
       connectTimeoutMS:30000
     })
