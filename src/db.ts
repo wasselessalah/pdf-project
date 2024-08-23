@@ -1,41 +1,22 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
-const MONGO_URL = process.env.MONGO_URI!;
+const MONGODB_URI = process.env.MONGODB_URI;
 
-interface MongooseConn {
-  conn: Mongoose | null;
-  promise: Promise<Mongoose> | null;
-}
+let cached = (global as any).mongoose || { conn: null, promise: null };
 
-declare global {
-  var mongoose: MongooseConn | undefined;
-}
+export const connectToDatabase = async () => {
+  if (cached.conn) return cached.conn;
 
-let cached: MongooseConn = global.mongoose || { conn: null, promise: null };
+  if (!MONGODB_URI) throw new Error("MONGODB_URI is missing");
 
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
-
-export const connect = async (): Promise<Mongoose> => {
-  if (cached.conn) {
-    return cached.conn;
-  }
-
-  if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGO_URL, {
-      dbName: 'helllo',
+  cached.promise =
+    cached.promise ||
+    mongoose.connect(MONGODB_URI, {
+      dbName: "snapevent",
       bufferCommands: false,
-      connectTimeoutMS: 30000,
     });
-  }
 
-  try {
-    cached.conn = await cached.promise;
-  } catch (error) {
-    cached.promise = null;
-    throw error;
-  }
+  cached.conn = await cached.promise;
 
   return cached.conn;
 };
